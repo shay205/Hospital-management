@@ -1,4 +1,4 @@
-﻿const API_URL = "https://hospital-management-bkaa.onrender.com/api";
+﻿const API_URL = "https://hospital-management-1-tm09.onrender.com/api";
 const tokenKey = "careline_token";
 
 const loginView = document.querySelector("#login-view");

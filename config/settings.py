@@ -12,7 +12,7 @@ ALLOWED_HOSTS = [
     host.strip()
     for host in os.getenv(
         "DJANGO_ALLOWED_HOSTS",
-        "localhost,127.0.0.1,hospital-management-bkaa.onrender.com",
+        "localhost,127.0.0.1,hospital-management-bkaa.onrender.com,hospital-management-1-tm09.onrender.com",
     ).split(",")
     if host.strip()
 ]
