@@ -5,3 +5,4 @@ django-cors-headers>=4.4,<5.0
 dj-database-url>=2.2,<3.0
 mysqlclient>=2.2,<3.0
 python-dotenv>=1.0,<2.0
+gunicorn>=21.0,<24.0
