@@ -4,29 +4,62 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Careline | Hospital Management</title>
+  <meta name="description" content="Careline hospital management system for patient operations, clinical workflows, and administrative oversight.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%231e7d8a'/%3E%3Cpath d='M28 12h8v16h16v8H36v16h-8V36H12v-8h16z' fill='white'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div id="login-view" class="login-shell">
     <div class="login-copy">
+      <div class="brand-block">
+        <span class="brand-mark">+</span>
+        <span class="brand-text">Careline</span>
+      </div>
       <p class="eyebrow">CARELINE MEDICAL CENTRE</p>
-      <h1>Care that moves with you.</h1>
-      <p>Secure clinical operations for teams who make every patient interaction count.</p>
+      <h1>Hospital Management System</h1>
+      <p class="login-tagline">Care that moves with you.</p>
+      <p>Modern clinical workflows for teams managing patient care, admissions, appointments, and operational visibility.</p>
+      <ul class="feature-list">
+        <li>Patient intake and records</li>
+        <li>Appointments and admissions</li>
+        <li>Clinical reporting and operations</li>
+      </ul>
     </div>
-    <form id="login-form" class="panel login-form">
+
+    <form id="login-form" class="panel login-form" novalidate>
       <p class="eyebrow">STAFF PORTAL</p>
       <h2>Welcome back</h2>
-      <label>Username<input name="username" required autocomplete="username"></label>
-      <label>Password<input name="password" type="password" required autocomplete="current-password"></label>
-      <button type="submit">Sign in</button>
-      <p id="login-error" class="error" role="alert"></p>
+
+      <label for="login-username">Username or email</label>
+      <input id="login-username" name="username" type="text" required autocomplete="username" placeholder="Enter username or email">
+
+      <div class="password-wrap">
+        <label for="login-password">Password</label>
+        <div class="password-field">
+          <input id="login-password" name="password" type="password" required autocomplete="current-password" placeholder="Enter your password">
+          <button type="button" id="toggle-password" class="toggle-password" aria-label="Show password">Show</button>
+        </div>
+      </div>
+
+      <button type="submit" id="login-button" class="primary-button full-width">
+        <span class="button-label">Sign in</span>
+      </button>
+      <p id="login-error" class="error" role="alert" aria-live="polite"></p>
     </form>
   </div>
 
   <div id="app-view" class="app-shell hidden">
     <aside class="sidebar">
-      <div class="brand"><span class="brand-mark">+</span><span>Careline<small>Medical Centre</small></span></div>
-      <nav>
+      <div class="brand">
+        <span class="brand-mark">+</span>
+        <div>
+          <span>Careline</span>
+          <small>Medical Centre</small>
+        </div>
+      </div>
+
+      <button id="sidebar-toggle" class="sidebar-toggle" type="button" aria-label="Open navigation" aria-controls="main-navigation" aria-expanded="false">☰</button>
+      <nav id="main-navigation" aria-label="Main navigation">
         <a class="active" href="#dashboard" data-view="dashboard">Overview</a>
         <a href="#patients" data-view="patients">Patients</a>
         <a href="#appointments">Appointments</a>
@@ -36,23 +69,115 @@
         <a href="#billing">Billing</a>
         <a href="#reports">Reports</a>
       </nav>
-      <button id="logout-button" class="quiet-button">Sign out</button>
+
+      <button id="logout-button" class="quiet-button" type="button">Sign out</button>
     </aside>
+
     <main class="content">
-      <header class="topbar"><div><p class="eyebrow">TUESDAY, 16 SEPTEMBER 2026</p><h1>Good morning, <span id="user-name">team</span>.</h1></div><div class="user-chip" id="user-role"></div></header>
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">TUESDAY, 16 SEPTEMBER 2026</p>
+          <h1>Good morning, <span id="user-name">team</span>.</h1>
+        </div>
+        <div class="user-chip" id="user-role"></div>
+      </header>
+
       <section id="dashboard" class="view-section">
-        <div class="section-heading"><div><p class="eyebrow">TODAY AT A GLANCE</p><h2>Clinical operations</h2></div><button id="refresh-button" class="outline-button">Refresh data</button></div>
-        <div id="stat-grid" class="stat-grid"></div>
-        <div class="lower-grid"><section class="panel"><div class="panel-heading"><h3>Recent activity</h3><span class="status-dot">Live</span></div><div id="activity-list" class="activity-list"></div></section><section class="panel accent-panel"><p class="eyebrow">NEXT STEP</p><h3>Keep the day moving.</h3><p>Patient records, appointments, and clinical workflows will appear here as each module is connected to the hospital API.</p></section></div>
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">TODAY AT A GLANCE</p>
+            <h2>Clinical operations</h2>
+          </div>
+          <button id="refresh-button" class="outline-button" type="button">Refresh data</button>
+        </div>
+
+        <div id="stat-grid" class="stat-grid" aria-live="polite"></div>
+
+        <div class="lower-grid">
+          <section class="panel">
+            <div class="panel-heading">
+              <h3>Recent activity</h3>
+              <span class="status-dot">Live</span>
+            </div>
+            <div id="activity-list" class="activity-list" aria-live="polite"></div>
+          </section>
+
+          <section class="panel accent-panel">
+            <p class="eyebrow">NEXT STEP</p>
+            <h3>Keep the day moving.</h3>
+            <p>Patient records, appointments, and clinical workflows will appear here as each module is connected to the hospital API.</p>
+            <div class="quick-actions">
+              <button class="mini-button" type="button" data-view="patients">View patients</button>
+              <button class="mini-button secondary" type="button" data-view="dashboard">Refresh</button>
+            </div>
+          </section>
+        </div>
       </section>
+
       <section id="patients" class="view-section hidden">
-        <div class="section-heading"><div><p class="eyebrow">PATIENT RECORDS</p><h2>Patients</h2></div><button id="new-patient-button">Register patient</button></div>
-        <div class="toolbar"><input id="patient-search" type="search" placeholder="Search by name, ID, phone or email"><button id="patient-search-button" class="outline-button">Search</button></div>
-        <section class="panel"><div id="patient-message" class="message" role="status"></div><div class="table-wrap"><table><thead><tr><th>Patient ID</th><th>Name</th><th>Contact</th><th>Registered</th><th>Status</th><th></th></tr></thead><tbody id="patient-table"></tbody></table></div><div id="patient-empty" class="empty-state hidden">No patients match this search.</div></section>
-        <form id="patient-form" class="panel patient-form hidden"><div class="panel-heading"><h3>Register patient</h3><button type="button" id="cancel-patient-button" class="outline-button">Cancel</button></div><div class="form-grid"><label>First name<input name="first_name" required></label><label>Last name<input name="last_name" required></label><label>Date of birth<input name="date_of_birth" type="date" required></label><label>Gender<select name="gender" required><option value="FEMALE">Female</option><option value="MALE">Male</option><option value="OTHER">Other</option><option value="UNDISCLOSED">Undisclosed</option></select></label><label>Phone<input name="phone" required></label><label>Email<input name="email" type="email"></label><label class="full-width">Address<textarea name="address" rows="2"></textarea></label></div><button type="submit">Save patient</button></form>
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">PATIENT RECORDS</p>
+            <h2>Patients</h2>
+          </div>
+          <button id="new-patient-button" type="button"><span aria-hidden="true">+</span> Register patient</button>
+        </div>
+
+        <div class="toolbar">
+          <input id="patient-search" type="search" placeholder="Search by name, ID, phone or email" aria-label="Search patients">
+          <button id="patient-search-button" class="outline-button" type="button">Search</button>
+        </div>
+
+        <section class="panel">
+          <div id="patient-message" class="message" role="status" aria-live="polite"></div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Patient ID</th>
+                  <th>Name</th>
+                  <th>Contact</th>
+                  <th>Registered</th>
+                  <th>Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="patient-table"></tbody>
+            </table>
+          </div>
+          <div id="patient-empty" class="empty-state hidden">No patients match this search.</div>
+        </section>
+
+        <form id="patient-form" class="panel patient-form hidden" novalidate>
+          <div class="panel-heading">
+            <h3>Register patient</h3>
+            <button type="button" id="cancel-patient-button" class="outline-button">Cancel</button>
+          </div>
+
+          <div class="form-grid">
+            <label>First name<input name="first_name" required></label>
+            <label>Last name<input name="last_name" required></label>
+            <label>Date of birth<input name="date_of_birth" type="date" required></label>
+            <label>Gender
+              <select name="gender" required>
+                <option value="FEMALE">Female</option>
+                <option value="MALE">Male</option>
+                <option value="OTHER">Other</option>
+                <option value="UNDISCLOSED">Undisclosed</option>
+              </select>
+            </label>
+            <label>Phone<input name="phone" required></label>
+            <label>Email<input name="email" type="email"></label>
+            <label class="full-width">Address<textarea name="address" rows="2"></textarea></label>
+          </div>
+
+          <button type="submit" class="primary-button"><span class="button-label">Save patient</span></button>
+        </form>
       </section>
     </main>
   </div>
+
+  <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
   <script src="app.js"></script>
 </body>
 </html>
